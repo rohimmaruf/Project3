@@ -56,10 +56,40 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                CustomFilledButton(tittle: 'Masuk'),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Lupa sandi? ',
+                    style: blueTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: regular,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                CustomFilledButton(
+                  tittle: 'Masuk',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/succes-page');
+                  },
+                ),
               ],
             ),
-          )
+          ),
+          const SizedBox(
+            height: 35,
+          ),
+          CustomTextButton(
+            tittle: 'Buat Akun Baru',
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/data-diri',
+              );
+            },
+          ),
         ],
       ),
     );

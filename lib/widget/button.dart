@@ -51,3 +51,45 @@ class CustomFilledButton extends StatelessWidget {
     );
   }
 }
+// Membuat button jyang gak keliatan
+
+class CustomTextButton extends StatelessWidget {
+  final String tittle;
+  final double height;
+  final double width;
+  final VoidCallback? onPressed;
+
+  const CustomTextButton({
+    Key? key,
+    required this.tittle,
+    this.width = double.infinity,
+    this.height = 24,
+    this.onPressed,
+  }) : super(
+          key: key,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      // Agar di selebar container
+      width: width,
+      height: height,
+      child: TextButton(
+        // MembUast text button
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+        ),
+        // Saat di klik menuju ke halaman signInPage
+        onPressed: onPressed,
+        child: Text(
+          tittle,
+          style: greyTextStyle.copyWith(
+            fontSize: 16,
+            fontWeight: regular,
+          ),
+        ),
+      ),
+    );
+  }
+}

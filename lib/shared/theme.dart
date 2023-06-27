@@ -8,6 +8,7 @@ Color greyColor = const Color(0xff696B76);
 Color lightbacgroundColor = const Color(0xffF6F8FB);
 Color darkbacgroundColor = const Color(0xff020518);
 Color orangeColor = const Color(0xffF8AB1D);
+Color blueColor = const Color(0xff53C1F9);
 
 // Membuat Ini dapat dari Google untuk Fonts
 FontWeight light = FontWeight.w300;
@@ -27,4 +28,7 @@ TextStyle greyTextStyle = GoogleFonts.poppins(
 );
 TextStyle whiteTextStyle = GoogleFonts.poppins(
   color: whiteColor,
+);
+TextStyle blueTextStyle = GoogleFonts.poppins(
+  color: blueColor,
 );
