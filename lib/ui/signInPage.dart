@@ -82,7 +82,7 @@ class SignInPage extends StatelessWidget {
             height: 35,
           ),
           CustomTextButton(
-            tittle: 'Buat Akun Baru',
+            tittle: 'Form Daftar KKN & KKP',
             onPressed: () {
               Navigator.pushNamed(
                 context,

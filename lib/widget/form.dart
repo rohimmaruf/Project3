@@ -43,7 +43,7 @@ class CustomField extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
             ),
             // Untuk mengatur padding seluruhnya isi content
-            contentPadding: const EdgeInsets.all(2),
+            contentPadding: const EdgeInsets.all(12),
           ),
         ),
       ],
