@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:project_3/shared/theme.dart';
@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     // Untuk Mengatur berapa lama loading page
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushNamed(context, '/sign-in');
     });
   }

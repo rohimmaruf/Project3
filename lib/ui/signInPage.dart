@@ -2,14 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/form.dart';
 import 'package:project_3/widget/button.dart';
+import 'package:http/http.dart' as http;
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final formkey = GlobalKey<FormState>();
+  final user_id = TextEditingController(text: '');
+  final password = TextEditingController(text: '');
+  _simpan() async {
+    final respone = await http.post(
+      Uri.parse('http://192.168.1.4/mahasiswa/users/login.php'),
+      body: {
+        "user_id": user_id.text,
+        "password": password.text,
+      },
+    );
+    return (respone);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        key: formkey,
         padding: const EdgeInsets.symmetric(
           horizontal: 24,
         ),
@@ -45,12 +66,16 @@ class SignInPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomField(title: 'Alamat Email'),
+                CustomField(
+                  title: 'Nomor induk',
+                  controller: user_id,
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 CustomField(
                   title: 'Masukan Sandi',
+                  controller: password,
                   obscureText: true,
                 ),
                 const SizedBox(
@@ -72,6 +97,11 @@ class SignInPage extends StatelessWidget {
                 CustomFilledButton(
                   tittle: 'Masuk',
                   onPressed: () {
+                    // _simpan().then(
+                    //   (value) {
+                    //     print(value);
+                    //   },
+                    // );
                     Navigator.pushNamed(context, '/succes-page');
                   },
                 ),

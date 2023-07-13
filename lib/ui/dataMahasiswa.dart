@@ -19,8 +19,8 @@ class _DataMahasiswaState extends State<DataMahasiswa> {
   Future _getdata() async {
     // 3. Buat untuk memanggil api yang ingin kita gunakan
     try {
-      final respone =
-          await http.get(Uri.parse('http://192.168.1.14/flutter_api/read.php'));
+      final respone = await http
+          .get(Uri.parse('http://192.168.1.4/mahasiswa/users/login.php'));
       // 4. Juka si respon benar akan muncuk kode 200
       if (respone.statusCode == 200) {
         // 5. Kita Buat variable data = Json Decode karean di php encode
@@ -62,8 +62,8 @@ class _DataMahasiswaState extends State<DataMahasiswa> {
                 //10. Untuk Membuat card
                 return Card(
                   child: ListTile(
-                    title: Text(listdata[index]['nama']),
-                    subtitle: Text(listdata[index]['nim']),
+                    title: Text(listdata[index][['user_id']]),
+                    subtitle: Text(listdata[index][['nama_depan']]),
                   ),
                 );
               }),

@@ -54,7 +54,7 @@ class _FormKkn2State extends State<FormKkn2> {
                 const SizedBox(
                   height: 20,
                 ),
-                const CustomField(
+                const CustomField3(
                   title: 'Alamat Instansi',
                 ),
                 const SizedBox(
@@ -69,7 +69,7 @@ class _FormKkn2State extends State<FormKkn2> {
                 CustomFilledButton(
                   tittle: 'Lanjut',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/succes-page');
+                    Navigator.pushNamed(context, '/succes-page2');
                   },
                 ),
               ],

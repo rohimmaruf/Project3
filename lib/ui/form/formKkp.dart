@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/form.dart';
 import 'package:project_3/widget/button.dart';
+import 'package:project_3/widget/form_date.dart';
 
 class FormKkp extends StatefulWidget {
   const FormKkp({super.key});
@@ -48,7 +49,7 @@ class _FormKkpState extends State<FormKkp> {
                 const SizedBox(
                   height: 20,
                 ),
-                const CustomField(
+                const CustomField3(
                   title: 'Alamat Perusahaan',
                 ),
                 const SizedBox(
@@ -64,12 +65,15 @@ class _FormKkpState extends State<FormKkp> {
                   title: 'Nama Pembimbing Lapangan',
                 ),
                 const SizedBox(
+                  height: 20,
+                ),
+                const SizedBox(
                   height: 50,
                 ),
                 CustomFilledButton(
                   tittle: 'Daftar',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/succes-page');
+                    Navigator.pushNamed(context, '/succes-page2');
                   },
                 ),
               ],

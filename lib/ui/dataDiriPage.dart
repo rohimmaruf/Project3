@@ -39,14 +39,11 @@ class _DataDiriPageState extends State<DataDiriPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Form Pendaftaran'),
-      // ),
       body: ListView(
         // 4. List View atau form key sama dengan key
         key: formkey,
         padding: const EdgeInsets.symmetric(
-          horizontal: 50,
+          horizontal: 24,
         ),
         children: [
           Column(
@@ -101,6 +98,10 @@ class _DataDiriPageState extends State<DataDiriPage> {
                       height: 20,
                     ),
                     const CustomField(title: 'Jurusan'),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const CustomField(title: 'Konsentrasi'),
                     const SizedBox(
                       height: 50,
                     ),
