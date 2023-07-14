@@ -62,7 +62,7 @@ class _DataMahasiswaState extends State<DataMahasiswa> {
                 //10. Untuk Membuat card
                 return Card(
                   child: ListTile(
-                    title: Text(listdata[index][['user_id']]),
+                    title: Text(listdata[index]['user_id']),
                     subtitle: Text(listdata[index][['nama_depan']]),
                   ),
                 );
