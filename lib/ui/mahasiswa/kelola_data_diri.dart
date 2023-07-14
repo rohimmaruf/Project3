@@ -4,14 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:project_3/shared/theme.dart';
 
-class KelolaDataMahasiswa extends StatefulWidget {
-  const KelolaDataMahasiswa({super.key});
+class KelolaDataDiri extends StatefulWidget {
+  const KelolaDataDiri({super.key});
 
   @override
-  State<KelolaDataMahasiswa> createState() => _KelolaDataMahasiswaState();
+  State<KelolaDataDiri> createState() => _KelolaDataMahasiswaState();
 }
 
-class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
+class _KelolaDataMahasiswaState extends State<KelolaDataDiri> {
   List<Map<String, dynamic>> listUser = [];
   bool Loading = true;
 
@@ -42,7 +42,6 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightbacgroundColor,
       appBar: AppBar(
         title: const Text(
           'Daftar KKN & KKP',

@@ -4,14 +4,14 @@ import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/list_menu.dart';
 import 'package:http/http.dart' as http;
 
-class HalamanUtamaKprodi extends StatefulWidget {
-  const HalamanUtamaKprodi({super.key});
+class HalamanUtamaMahasiswa extends StatefulWidget {
+  const HalamanUtamaMahasiswa({super.key});
 
   @override
-  State<HalamanUtamaKprodi> createState() => _HalamanUtamaState();
+  State<HalamanUtamaMahasiswa> createState() => _HalamanUtamaState();
 }
 
-class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
+class _HalamanUtamaState extends State<HalamanUtamaMahasiswa> {
   List<Map<String, dynamic>> listUsers = [];
   // Membuat Varible list data
   List listdata = ["1"];
@@ -95,7 +95,7 @@ Widget judul(String role) {
           ),
         ),
         Text(
-          'KaProdi',
+          role,
           style: blackTextStyle.copyWith(
             fontSize: 18,
             fontWeight: black,
@@ -126,7 +126,7 @@ Widget subjudul(String jurusan, String user_id) {
             Column(
               children: [
                 Text(
-                  'Masuk Sebagai',
+                  'Prodi & Konsentrasi',
                   style: blackTextStyle.copyWith(
                     fontSize: 14,
                     fontWeight: black,
@@ -136,7 +136,7 @@ Widget subjudul(String jurusan, String user_id) {
                   height: 8,
                 ),
                 Text(
-                  'KaProdi',
+                  jurusan,
                   style: greyTextStyle.copyWith(
                     fontSize: 14,
                   ),
@@ -184,7 +184,7 @@ Widget menulist(BuildContext context) {
           children: [
             ListMenu(
               iconUrl: 'assets/logo_konsultasi.png',
-              tittle: 'Kelola Data \n KKN & KKP ',
+              tittle: 'Kelola \n Data Diri',
               onTap: () {
                 Navigator.pushNamed(context, '/kelola_data_mahasiswa');
               },
@@ -195,6 +195,13 @@ Widget menulist(BuildContext context) {
             ListMenu(
               iconUrl: 'assets/logo_dosen.png',
               tittle: 'Dosen \n Pembimbing',
+              onTap: () {
+                Navigator.pushNamed(context, '/dosen_pembimbing');
+              },
+            ),
+            ListMenu(
+              iconUrl: 'assets/logo_report.png',
+              tittle: 'Upload \n Laporan',
               onTap: () {
                 Navigator.pushNamed(context, '/dosen_pembimbing');
               },

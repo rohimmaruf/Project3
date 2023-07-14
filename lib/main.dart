@@ -3,14 +3,18 @@ import 'package:project_3/ui/SplashPage.dart';
 import 'package:project_3/ui/daftarKkn1.dart';
 import 'package:project_3/ui/dataDiriPage.dart';
 import 'package:project_3/ui/dataMahasiswa.dart';
+import 'package:project_3/ui/dospem/halaman_utama_dospem.dart';
 import 'package:project_3/ui/form/formKkp.dart';
 import 'package:project_3/ui/form/formkkn.dart';
 import 'package:project_3/ui/form/formkkn2.dart';
 import 'package:project_3/ui/formUji.dart';
 import 'package:project_3/ui/homePageDosen.dart';
+import 'package:project_3/ui/kaprodi/dosen_pembimbing.dart';
 import 'package:project_3/ui/kaprodi/halaman_utama.dart';
 import 'package:project_3/ui/kaprodi/kelola_data_mahasisw.dart';
-import 'package:project_3/ui/mahasiswa/halamanutama.dart';
+import 'package:project_3/ui/kaprodi/pilih_dosen%20_pembimbing.dart';
+import 'package:project_3/ui/mahasiswa/halaman_utama_mahasiswa.dart';
+import 'package:project_3/ui/mahasiswa/kelola_data_diri.dart';
 import 'package:project_3/ui/signInPage.dart';
 import 'package:project_3/ui/succesPage.dart';
 import 'package:project_3/ui/pilihKknKkpPage.dart';
@@ -39,11 +43,13 @@ class MyApp extends StatelessWidget {
         '/formKkp': (context) => const FormKkp(),
         '/formKkn': (context) => const FormKkn(),
         '/formKkn2': (context) => const FormKkn2(),
-        '/halamanutama1': (context) => const HalamanUtama(),
         '/halaman_utama_kprodi': (context) => const HalamanUtamaKprodi(),
         '/kelola_data_mahasiswa': (context) => const KelolaDataMahasiswa(),
-        
-        
+        '/dosen_pembimbing': (context) => const DosenPembimbing(),
+        '/pilih_dosen_pembimbing': (context) => const PilihDosenPembimbing(),
+        '/halaman_utama_mahasiswa': (context) => const HalamanUtamaMahasiswa(),
+        '/kelola_data_diri': (context) => const KelolaDataDiri(),
+        '/halaman_utama_dosen': (context) => const HalamanUtamaDospem(),
       },
     );
   }

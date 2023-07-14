@@ -15,42 +15,41 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final formkey = GlobalKey<FormState>();
-  final id_controller = TextEditingController(text: '2023000044');
-  final password_controller = TextEditingController(text: 'mahasiswa');
+  final id_controller = TextEditingController(text: '2023000002');
+  final password_controller = TextEditingController(text: 'dosen');
   _simpan() async {
     print(id_controller);
     final respone = await http.post(
-      Uri.parse('http://192.168.1.11/mahasiswa/users/login.php'),
-      body: 
-      jsonEncode({
-        "user_id": id_controller.text,
-        "password": password_controller.text,
-      })
-    );
+        Uri.parse('http://192.168.1.4/mahasiswa/users/login.php'),
+        body: jsonEncode({
+          "user_id": id_controller.text,
+          "password": password_controller.text,
+        }));
+
     var body = jsonDecode(respone.body);
+    print(body);
     // Negecek sudah bnar atau belum untuk ambil object
     print(body["success"]);
     // print(body["data"]["role"]);
-    // Untuk kondisi jika dia benar apa jika salah 
-    if (body["success"]){
+    // Untuk kondisi jika dia benar apa jika salah
+    if (body["success"]) {
       // print("kerja bagus");
       final snackBar = SnackBar(
-                        content: Text(body["message"]),
-                      );
-                      // 16. Kita tampilkan si snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        content: Text(body["message"]),
+      );
+      // 16. Kita tampilkan si snackbar
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.pushNamed(context, '/halaman_utama_kprodi');
-    }else {
+    } else {
       // print("salah");
       final snackBar = SnackBar(
-                        content: const Text('Masukan kembali Nomor induk & Sandi yang Benar'),
-                      );
-                      // 16. Kita tampilkan si snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        content: const Text('Masukan kembali Nomor induk & Sandi yang Benar'),
+      );
+      // 16. Kita tampilkan si snackbar
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    
-    // return (respone);
 
+    // return (respone);
   }
 
   @override
