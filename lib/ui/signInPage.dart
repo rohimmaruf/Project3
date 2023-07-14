@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/form.dart';
@@ -13,17 +15,42 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final formkey = GlobalKey<FormState>();
-  final user_id = TextEditingController(text: '');
-  final password = TextEditingController(text: '');
+  final id_controller = TextEditingController(text: '2023000044');
+  final password_controller = TextEditingController(text: 'mahasiswa');
   _simpan() async {
+    print(id_controller);
     final respone = await http.post(
-      Uri.parse('http://192.168.1.4/mahasiswa/users/login.php'),
-      body: {
-        "user_id": user_id.text,
-        "password": password.text,
-      },
+      Uri.parse('http://192.168.1.11/mahasiswa/users/login.php'),
+      body: 
+      jsonEncode({
+        "user_id": id_controller.text,
+        "password": password_controller.text,
+      })
     );
-    return (respone);
+    var body = jsonDecode(respone.body);
+    // Negecek sudah bnar atau belum untuk ambil object
+    print(body["success"]);
+    // print(body["data"]["role"]);
+    // Untuk kondisi jika dia benar apa jika salah 
+    if (body["success"]){
+      // print("kerja bagus");
+      final snackBar = SnackBar(
+                        content: Text(body["message"]),
+                      );
+                      // 16. Kita tampilkan si snackbar
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.pushNamed(context, '/halaman_utama_kprodi');
+    }else {
+      // print("salah");
+      final snackBar = SnackBar(
+                        content: const Text('Masukan kembali Nomor induk & Sandi yang Benar'),
+                      );
+                      // 16. Kita tampilkan si snackbar
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    
+    // return (respone);
+
   }
 
   @override
@@ -68,14 +95,14 @@ class _SignInPageState extends State<SignInPage> {
               children: [
                 CustomField(
                   title: 'Nomor induk',
-                  controller: user_id,
+                  controller: id_controller,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 CustomField(
                   title: 'Masukan Sandi',
-                  controller: password,
+                  controller: password_controller,
                   obscureText: true,
                 ),
                 const SizedBox(
@@ -97,12 +124,13 @@ class _SignInPageState extends State<SignInPage> {
                 CustomFilledButton(
                   tittle: 'Masuk',
                   onPressed: () {
+                    _simpan();
                     // _simpan().then(
                     //   (value) {
                     //     print(value);
                     //   },
                     // );
-                    Navigator.pushNamed(context, '/succes-page');
+                    // Navigator.pushNamed(context, '/succes-page');
                   },
                 ),
               ],

@@ -15,9 +15,13 @@ class ListMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
+    return Container(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Container(
+          
           margin: EdgeInsets.only(
             bottom: 8,
           ),
@@ -29,6 +33,7 @@ class ListMenu extends StatelessWidget {
             color: whiteColor,
           ),
           child: Center(
+            
             child: Image.asset(
               iconUrl,
               width: 40,
@@ -45,7 +50,9 @@ class ListMenu extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-      ],
-    );
+          ],
+        ),
+      ),
+    ) ;   
   }
 }
