@@ -104,7 +104,7 @@ class _DataDiriPageState extends State<DataDiriPage> {
                     const CustomField(
                       title: 'Password',
                       obscureText: true,
-                      ),
+                    ),
                     const SizedBox(
                       height: 50,
                     ),

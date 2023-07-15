@@ -27,6 +27,7 @@ class _SignInPageState extends State<SignInPage> {
           "password": password_controller.text,
         }));
     var body = jsonDecode(respone.body);
+    print(body);
     // Negecek sudah bnar atau belum untuk ambil object
     // print(body["data"]["role"]);
     // Untuk kondisi jika dia benar apa jika salah
@@ -43,9 +44,9 @@ class _SignInPageState extends State<SignInPage> {
       if (result["role"] == "kaprodi") {
         Navigator.pushNamed(context, '/halaman_utama_kprodi');
       } else if (result["role"] == "mahasiswa") {
-        Navigator.pushNamed(context, '/halamanutama1');
+        Navigator.pushNamed(context, '/halaman_utama_mahasiswa');
       } else {
-        Navigator.pushNamed(context, '/home-page-dosen');
+        Navigator.pushNamed(context, '/halaman_utama_dosen');
       }
     } else {
       final snackBar = SnackBar(

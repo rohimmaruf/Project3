@@ -38,7 +38,7 @@ class SuccesPage2 extends StatelessWidget {
               width: 185,
               tittle: 'Mulai',
               onPressed: () {
-                Navigator.pushNamed(context, '/halamanutama1');
+                Navigator.pushNamed(context, '/halaman_utama_mahasiswa');
               },
             ),
           ],

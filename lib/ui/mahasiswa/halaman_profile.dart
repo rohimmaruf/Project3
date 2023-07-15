@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:project_3/shared/local_storage.dart';
 import 'package:project_3/shared/theme.dart';
 
-class KelolaDataMahasiswa extends StatefulWidget {
-  const KelolaDataMahasiswa({super.key});
+class HalamanProfile extends StatefulWidget {
+  const HalamanProfile({super.key});
 
   @override
-  State<KelolaDataMahasiswa> createState() => _KelolaDataMahasiswaState();
+  State<HalamanProfile> createState() => _KelolaDataMahasiswaState();
 }
 
-class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
-  List<Map<String, dynamic>> listKegiatan = [];
+class _KelolaDataMahasiswaState extends State<HalamanProfile> {
+  List<Map<String, dynamic>> listKegiatan = [{}];
   Map<String, dynamic> myData = {};
   // Membuat Varible list data
   List listdata = ["1"];
@@ -34,35 +34,10 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
 
     // Objek response berhasil diambil dari local storage, gunakan sesuai kebutuhan
     // Misalnya, tampilkan nama pengguna:
-    String dosenId = storedResponse['mahasiswa_id'];
-    print('Nama Pengguna: $dosenId');
 
     setState(() {
       myData = storedResponse;
-    });
-
-    var url = Uri.parse(
-        'http://192.168.1.11/mahasiswa/kegiatan/kegiatan.php?dosen_id=$dosenId');
-    var response = await http.get(url);
-
-    // bikion var respon = si respon.body jsonDecode menjadi Object
-    Map<String, dynamic> responseData = jsonDecode(response.body);
-    // Merubah variable listUser menjadi global
-    //
-
-    if (responseData["success"]) {
-      print(responseData);
-      setState(() {
-        listKegiatan = List<Map<String, dynamic>>.from(responseData['data']);
-        Loading = false;
-      });
-    } else {
-      print("Belum ada data");
-    }
-
-    setState(() {
-      // listKegiatan = List<Map<String, dynamic>>.from(responseData['data']);
-      // Loading = false;
+      Loading = false;
     });
   }
 
@@ -72,7 +47,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
       backgroundColor: lightbacgroundColor,
       appBar: AppBar(
         title: const Text(
-          'Daftar KKN & KKP',
+          'Halaman Profile',
         ),
         backgroundColor: orangeColor,
       ),
@@ -80,6 +55,9 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
           itemCount: listKegiatan.length,
           itemBuilder: (context, index) {
             var kegiatan = listKegiatan[index];
+            var namaLengkap =
+                myData["nama_depan"] + " " + myData["nama_belakang"];
+                print("data: $myData");
             return Loading
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -92,7 +70,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                       right: 10,
                       left: 10,
                     ),
-                    padding: const EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(28),
                       image: DecorationImage(
@@ -107,9 +85,9 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          kegiatan["tipe_kegiatan"],
+                          namaLengkap,
                           style: blackTextStyle.copyWith(
-                            fontSize: 14,
+                            fontSize: 24,
                             fontWeight: semibold,
                           ),
                         ),
@@ -117,48 +95,24 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                         //   height: 28,
                         // ),
                         Text(
-                          kegiatan["nama_depan"],
+                          myData["mahasiswa_id"],
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semibold,
                             // membuat spasi
                           ),
                         ),
-                        // const SizedBox(
-                        //   height: 21,
-                        // ),
-                        Text(
-                          kegiatan["mahasiswa_id"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 14,
-                            fontWeight: semibold,
-                          ),
-                        ),
+                        Text(myData["role"]),
                         const SizedBox(
-                          height: 10,
+                          height: 21,
                         ),
                         Text(
-                          kegiatan["nama_tempat"],
+                          myData["jurusan"],
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semibold,
                           ),
-                        ),
-                        Text(
-                          kegiatan["alamat"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 12,
-                            fontWeight: semibold,
-                          ),
-                        ),
-
-                        Text(
-                          myData["nama_depan"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 14,
-                            fontWeight: semibold,
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   );

@@ -5,14 +5,14 @@ import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/list_menu.dart';
 import 'package:http/http.dart' as http;
 
-class HalamanUtamaKprodi extends StatefulWidget {
-  const HalamanUtamaKprodi({super.key});
+class HalamanUtamaMahasiswa extends StatefulWidget {
+  const HalamanUtamaMahasiswa({super.key});
 
   @override
-  State<HalamanUtamaKprodi> createState() => _HalamanUtamaState();
+  State<HalamanUtamaMahasiswa> createState() => _HalamanUtamaState();
 }
 
-class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
+class _HalamanUtamaState extends State<HalamanUtamaMahasiswa> {
   List<Map<String, dynamic>> listKegiatan = [];
   Map<String, dynamic> myData = {};
   // Membuat Varible list data
@@ -201,9 +201,9 @@ Widget menulist(BuildContext context) {
           children: [
             ListMenu(
               iconUrl: 'assets/logo_konsultasi.png',
-              tittle: 'Pilih \n Dospem',
+              tittle: 'Data \n Diri',
               onTap: () {
-                Navigator.pushNamed(context, '/halaman_daftar_mahasiswa');
+                Navigator.pushNamed(context, '/halaman_profile');
               },
             ),
             const SizedBox(
@@ -211,13 +211,10 @@ Widget menulist(BuildContext context) {
             ),
             ListMenu(
               iconUrl: 'assets/logo_report.png',
-              tittle: 'Daftar \n Mahasiswa',
+              tittle: 'Kegiatan \n KKP/KKN',
               onTap: () {
-                Navigator.pushNamed(context, '/halaman_daftar_mahasiswa');
+                Navigator.pushNamed(context, '/halaman_kegiatan');
               },
-            ),
-            const SizedBox(
-              width: 5,
             )
           ],
         )

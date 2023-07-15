@@ -5,16 +5,16 @@ import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/list_menu.dart';
 import 'package:http/http.dart' as http;
 
-class HalamanUtamaKprodi extends StatefulWidget {
-  const HalamanUtamaKprodi({super.key});
+class HalamanUtamaDospem extends StatefulWidget {
+  const HalamanUtamaDospem({super.key});
 
   @override
-  State<HalamanUtamaKprodi> createState() => _HalamanUtamaState();
+  State<HalamanUtamaDospem> createState() => _HalamanUtamaState();
 }
 
-class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
+class _HalamanUtamaState extends State<HalamanUtamaDospem> {
   List<Map<String, dynamic>> listKegiatan = [];
-  Map<String, dynamic> myData = {};
+  Map<String,dynamic> myData = {};
   // Membuat Varible list data
   List listdata = ["1"];
   bool Loading = true;
@@ -30,12 +30,39 @@ class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
   Future<void> _getdata() async {
     dynamic storedResponse = await LocalStorage.getResponseObject();
 
+    print(storedResponse);
+
     // Objek response berhasil diambil dari local storage, gunakan sesuai kebutuhan
     // Misalnya, tampilkan nama pengguna:
+    String dosenId = storedResponse['mahasiswa_id'];
+    print('Nama Pengguna: $dosenId');
 
     setState(() {
       myData = storedResponse;
+    });
+
+    var url = Uri.parse(
+        'http://192.168.1.11/mahasiswa/kegiatan/kegiatan.php?dosen_id=$dosenId');
+    var response = await http.get(url);
+
+    // bikion var respon = si respon.body jsonDecode menjadi Object
+    Map<String, dynamic> responseData = jsonDecode(response.body);
+    // Merubah variable listUser menjadi global
+    //
+
+    if (responseData["success"]) {
+      print(responseData);
+      setState(() {
+      listKegiatan = List<Map<String, dynamic>>.from(responseData['data']);
       Loading = false;
+      });
+    } else {
+      print("Belum ada data");
+    }
+
+    setState(() {
+      // listKegiatan = List<Map<String, dynamic>>.from(responseData['data']);
+      // Loading = false;
     });
   }
 
@@ -44,7 +71,7 @@ class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
   @override
   Widget build(BuildContext context) {
     // var user = listKegiatan[1];
-    // var kegiatan = listKegiatan[0];
+    var kegiatan = listKegiatan[0];
     print(myData);
     return Scaffold(
       body: Loading
@@ -66,25 +93,6 @@ class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
     );
   }
 }
-
-// Scaffold(
-//       body: Loading
-//           ? Center(
-//               child: CircularProgressIndicator(),
-//             )
-//           : ListView(
-//               children: [
-//                 judul(
-//                   myData["nama_depan"],
-//                 ),
-//                 subjudul(
-//                   myData["role"],
-//                   myData["mahasiswa_id"],
-//                 ),
-//                 menulist(context),
-//               ],
-//             ),
-//     );
 
 Widget judul(String namaDosen) {
   return Container(
@@ -201,9 +209,9 @@ Widget menulist(BuildContext context) {
           children: [
             ListMenu(
               iconUrl: 'assets/logo_konsultasi.png',
-              tittle: 'Pilih \n Dospem',
+              tittle: 'Daftar \n Bimbingan',
               onTap: () {
-                Navigator.pushNamed(context, '/halaman_daftar_mahasiswa');
+                Navigator.pushNamed(context, '/kelola_data_mahasiswa');
               },
             ),
             const SizedBox(
@@ -211,13 +219,10 @@ Widget menulist(BuildContext context) {
             ),
             ListMenu(
               iconUrl: 'assets/logo_report.png',
-              tittle: 'Daftar \n Mahasiswa',
+              tittle: 'Review \n Laporan',
               onTap: () {
-                Navigator.pushNamed(context, '/halaman_daftar_mahasiswa');
+                Navigator.pushNamed(context, '/dosen_pembimbing');
               },
-            ),
-            const SizedBox(
-              width: 5,
             )
           ],
         )

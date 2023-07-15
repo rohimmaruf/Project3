@@ -69,7 +69,7 @@ class _FormKkn2State extends State<FormKkn2> {
                 CustomFilledButton(
                   tittle: 'Lanjut',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/succes-page2');
+                    Navigator.pushNamed(context, '/halaman_utama_dosen');
                   },
                 ),
               ],

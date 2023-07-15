@@ -1,0 +1,13 @@
+Dosen : 
+100399379940114434
+dosen
+
+Mahasiswa :
+12345
+2023000035
+2023000174
+mahasiswa
+
+Kaprodi:
+100400276715864064
+kaprodi

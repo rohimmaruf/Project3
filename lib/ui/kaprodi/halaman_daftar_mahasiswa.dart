@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:project_3/shared/local_storage.dart';
 import 'package:project_3/shared/theme.dart';
 
-class KelolaDataMahasiswa extends StatefulWidget {
-  const KelolaDataMahasiswa({super.key});
+class HalamanDataMahasiswa extends StatefulWidget {
+  const HalamanDataMahasiswa({super.key});
 
   @override
-  State<KelolaDataMahasiswa> createState() => _KelolaDataMahasiswaState();
+  State<HalamanDataMahasiswa> createState() => _KelolaDataMahasiswaState();
 }
 
-class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
+class _KelolaDataMahasiswaState extends State<HalamanDataMahasiswa> {
   List<Map<String, dynamic>> listKegiatan = [];
   Map<String, dynamic> myData = {};
   // Membuat Varible list data
@@ -42,7 +42,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
     });
 
     var url = Uri.parse(
-        'http://192.168.1.11/mahasiswa/kegiatan/kegiatan.php?dosen_id=$dosenId');
+        'http://192.168.1.11/mahasiswa/users/allUsers.php');
     var response = await http.get(url);
 
     // bikion var respon = si respon.body jsonDecode menjadi Object
@@ -80,6 +80,8 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
           itemCount: listKegiatan.length,
           itemBuilder: (context, index) {
             var kegiatan = listKegiatan[index];
+            print(kegiatan);
+            var namaLengkap = kegiatan["nama_depan"] + " " + kegiatan["nama_belakang"];
             return Loading
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -107,7 +109,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          kegiatan["tipe_kegiatan"],
+                          namaLengkap,
                           style: blackTextStyle.copyWith(
                             fontSize: 14,
                             fontWeight: semibold,
@@ -116,19 +118,11 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                         // const SizedBox(
                         //   height: 28,
                         // ),
-                        Text(
-                          kegiatan["nama_depan"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: semibold,
-                            // membuat spasi
-                          ),
-                        ),
                         // const SizedBox(
                         //   height: 21,
                         // ),
                         Text(
-                          kegiatan["mahasiswa_id"],
+                          kegiatan["role"],
                           style: blackTextStyle.copyWith(
                             fontSize: 14,
                             fontWeight: semibold,
@@ -138,24 +132,9 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                           height: 10,
                         ),
                         Text(
-                          kegiatan["nama_tempat"],
+                          kegiatan["jurusan"],
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
-                            fontWeight: semibold,
-                          ),
-                        ),
-                        Text(
-                          kegiatan["alamat"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 12,
-                            fontWeight: semibold,
-                          ),
-                        ),
-
-                        Text(
-                          myData["nama_depan"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 14,
                             fontWeight: semibold,
                           ),
                         ),

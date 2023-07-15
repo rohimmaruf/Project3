@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:project_3/shared/local_storage.dart';
 import 'package:project_3/shared/theme.dart';
 
-class KelolaDataMahasiswa extends StatefulWidget {
-  const KelolaDataMahasiswa({super.key});
+class HalamanKegiatan extends StatefulWidget {
+  const HalamanKegiatan({super.key});
 
   @override
-  State<KelolaDataMahasiswa> createState() => _KelolaDataMahasiswaState();
+  State<HalamanKegiatan> createState() => _KelolaDataMahasiswaState();
 }
 
-class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
+class _KelolaDataMahasiswaState extends State<HalamanKegiatan> {
   List<Map<String, dynamic>> listKegiatan = [];
   Map<String, dynamic> myData = {};
   // Membuat Varible list data
@@ -42,7 +42,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
     });
 
     var url = Uri.parse(
-        'http://192.168.1.11/mahasiswa/kegiatan/kegiatan.php?dosen_id=$dosenId');
+        'http://192.168.1.11/mahasiswa/kegiatan/kegiatan.php?mahasiswa_id=$dosenId');
     var response = await http.get(url);
 
     // bikion var respon = si respon.body jsonDecode menjadi Object
@@ -72,7 +72,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
       backgroundColor: lightbacgroundColor,
       appBar: AppBar(
         title: const Text(
-          'Daftar KKN & KKP',
+          'Halaman Kegiatan',
         ),
         backgroundColor: orangeColor,
       ),
@@ -80,6 +80,8 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
           itemCount: listKegiatan.length,
           itemBuilder: (context, index) {
             var kegiatan = listKegiatan[index];
+            var namaLengkap =
+                kegiatan["nama_depan"] + " " + kegiatan["nama_belakang"];
             return Loading
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -92,7 +94,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                       right: 10,
                       left: 10,
                     ),
-                    padding: const EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(28),
                       image: DecorationImage(
@@ -107,9 +109,9 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          kegiatan["tipe_kegiatan"],
+                          kegiatan["tipe_kegiatan"].toUpperCase(),
                           style: blackTextStyle.copyWith(
-                            fontSize: 14,
+                            fontSize: 24,
                             fontWeight: semibold,
                           ),
                         ),
@@ -117,25 +119,16 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                         //   height: 28,
                         // ),
                         Text(
-                          kegiatan["nama_depan"],
+                          namaLengkap,
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semibold,
                             // membuat spasi
                           ),
                         ),
-                        // const SizedBox(
-                        //   height: 21,
-                        // ),
-                        Text(
-                          kegiatan["mahasiswa_id"],
-                          style: blackTextStyle.copyWith(
-                            fontSize: 14,
-                            fontWeight: semibold,
-                          ),
-                        ),
+                        Text(kegiatan["daftar_anggota"]),
                         const SizedBox(
-                          height: 10,
+                          height: 21,
                         ),
                         Text(
                           kegiatan["nama_tempat"],
@@ -153,7 +146,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
                         ),
 
                         Text(
-                          myData["nama_depan"],
+                          kegiatan["nama_dosen"],
                           style: blackTextStyle.copyWith(
                             fontSize: 14,
                             fontWeight: semibold,
