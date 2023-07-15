@@ -44,7 +44,7 @@ class _KelolaDataMahasiswaState extends State<KelolaDataMahasiswa> {
         ),
         body: ListView.builder(
           itemCount: Data.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (context, index ) {
             var listData = Data[index];
             return Container(
               

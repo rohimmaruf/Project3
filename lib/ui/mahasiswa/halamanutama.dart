@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/list_menu.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_3/shared/local_storage.dart';
 
 class HalamanUtama extends StatefulWidget {
   const HalamanUtama({super.key});
@@ -14,71 +15,80 @@ class HalamanUtama extends StatefulWidget {
 class _HalamanUtamaState extends State<HalamanUtama> {
   // Membuat Varible list data
   List listdata = [];
+  Map<String, dynamic> dataUser = {};
   bool Loading = false;
-  // Membuat Methode
-  Future _getdata() async {
-    // 3. Buat untuk memanggil api yang ingin kita gunakan
-    try {
-      final respone = await http
-          .get(Uri.parse('http://192.168.1.4/mahasiswa/users/allUsers.php'));
-      // 4. Juka si respon benar akan muncuk kode 200
-      if (respone.statusCode == 200) {
-        // 5. Kita Buat variable data = Json Decode karean di php encode
-        final data = jsonDecode(respone.body);
-        // 6. Kita buat set State
-        setState(() {
-          listdata = data;
-          // 13. Jika data masuk maka si loading akan berhenti
-          Loading;
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   // 7. Untuk membuat jalan terlebih dahulu
   void initState() {
-    _getdata();
     // 8. Perintan print(listdata); untuk mengecek data tersebut sudah masuk atau belun
     super.initState();
+    fetchData();
+  }
+
+  // Membuat Methode
+  Future<void> fetchData() async {
+    print("GET BERHASIL");
+
+// Di tempat lain dalam aplikasi, misalnya pada halaman profil pengguna
+    dynamic storedResponse = await LocalStorage.getResponseObject();
+
+    if (storedResponse != null) {
+      // Objek response berhasil diambil dari local storage, gunakan sesuai kebutuhan
+      // Misalnya, tampilkan nama pengguna:
+      print('Nama Pengguna: $storedResponse');
+      setState(() {
+        dataUser = storedResponse;
+      });
+    } else {
+      // Objek response tidak tersedia di local storage
+      print('Objek response tidak tersedia.');
+    }
+
+    // var url = Uri.parse(
+    //     'http://192.168.1.11/mahasiswa/users/allUsers.php?role=mahasiswa');
+    // var response = await http.get(url);
+
+    // if (response.statusCode == 200) {
+    //   Map<String, dynamic> responseData = jsonDecode(response.body);
+    //   setState(() {
+    //     // products = List<Map<String, dynamic>>.from(responseData['data']);
+    //   });
+    // } else {
+    //   print('Failed to fetch data. Status code: ${response.statusCode}');
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
+    print(dataUser);
+    var namaLengkap = dataUser["nama_depan"] + " " + dataUser["nama_belakang"];
+    var jurusan = dataUser["jurusan"];
     return Scaffold(
-        body: Loading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
-                itemCount: listdata.length,
-                itemBuilder: ((context, index) {
-                  //10. Untuk Membuat card
-                  return Card(
-                    child: ListTile(
-                      title: Text(listdata[index]['user_id']),
-                      subtitle: Text(listdata[index]['nama_depan']),
-                    ),
-                  );
-                }),
-                // children: [
-                //   judul(),
-                //   const SizedBox(
-                //     height: 10,
-                //   ),
-                //   subjudul(),
-                //   const SizedBox(
-                //     height: 10,
-                //   ),
-                //   menulist(),
-                // ],
-              ));
+      body: ListView(
+        children: [
+          judul(namaLengkap),
+          subjudul(jurusan),
+          menulist(context),
+          FloatingActionButton(onPressed: fetchData)
+        ],
+      ),
+      // children: [
+      //   judul(),
+      //   const SizedBox(
+      //     height: 10,
+      //   ),
+      //   subjudul(),
+      //   const SizedBox(
+      //     height: 10,
+      //   ),
+      //   menulist(),
+      // ],
+    );
   }
 }
 
-Widget judul() {
+Widget judul(String namaLengkap) {
   return Container(
     padding: EdgeInsets.all(30),
     width: 375,
@@ -102,7 +112,7 @@ Widget judul() {
           ),
         ),
         Text(
-          'Rohim Maruf',
+          namaLengkap,
           style: blackTextStyle.copyWith(
             fontSize: 18,
             fontWeight: black,
@@ -113,7 +123,7 @@ Widget judul() {
   );
 }
 
-Widget subjudul() {
+Widget subjudul(String jurusan) {
   return Container(
     margin: const EdgeInsets.symmetric(
       horizontal: 24,
@@ -143,7 +153,7 @@ Widget subjudul() {
                   height: 8,
                 ),
                 Text(
-                  'Teknik Informatika',
+                  jurusan,
                   style: greyTextStyle.copyWith(
                     fontSize: 14,
                   ),
@@ -153,13 +163,13 @@ Widget subjudul() {
             const SizedBox(
               width: 150,
             ),
-            Text(
-              '1119110050',
-              style: blackTextStyle.copyWith(
-                fontSize: 14,
-                fontWeight: semibold,
-              ),
-            ),
+            // Text(
+            //   '1119110050',
+            //   style: blackTextStyle.copyWith(
+            //     fontSize: 14,
+            //     fontWeight: semibold,
+            //   ),
+            // ),
           ],
         ),
       ],
@@ -167,7 +177,7 @@ Widget subjudul() {
   );
 }
 
-Widget menulist() {
+Widget menulist(BuildContext context) {
   return Container(
     margin: const EdgeInsets.symmetric(
       horizontal: 24,
@@ -200,7 +210,9 @@ Widget menulist() {
             ListMenu(
               iconUrl: 'assets/logo_durasikegiatan.png',
               tittle: 'Konsultasi \n Dosen',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context,"/konsultasi-dosen");
+              },
             ),
             const SizedBox(
               width: 16,

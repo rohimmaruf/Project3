@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/list_menu.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_3/shared/local_storage.dart';
 
 class HalamanUtamaKprodi extends StatefulWidget {
   const HalamanUtamaKprodi({super.key});
@@ -21,19 +22,33 @@ class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
   // 7. Untuk membuat jalan terlebih dahulu
   void initState() {
     super.initState();
-    _getdata();
+    fetchData();
     // 8. Perintan print(listdata); untuk mengecek data tersebut sudah masuk atau belun
   }
-  Future<void> _getdata() async {
+
+  Future<void> fetchData() async {
+    print("GET BERHASIL");
+    // Di tempat lain dalam aplikasi, misalnya pada halaman profil pengguna
+    dynamic storedResponse = await LocalStorage.getResponseObject();
+
+
+    if (storedResponse != null) {
+      // Objek response berhasil diambil dari local storage, gunakan sesuai kebutuhan
+      // Misalnya, tampilkan nama pengguna:
+      String userName = storedResponse['nama_depan'];
+      print('Nama Pengguna: $storedResponse');
+    } else {
+      // Objek response tidak tersedia di local storage
+      print('Objek response tidak tersedia.');
+    }
+
+
     var url = Uri.parse(
         'http://192.168.1.11/mahasiswa/users/allUsers.php?role=mahasiswa');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // bikion var respon = si respon.body jsonDecode menjadi Object
       Map<String, dynamic> responseData = jsonDecode(response.body);
-      // Merubah variable listUser menjadi global
-      // 
       setState(() {
         listUsers = List<Map<String, dynamic>>.from(responseData['data']);
       });
@@ -44,20 +59,29 @@ class _HalamanUtamaState extends State<HalamanUtamaKprodi> {
 
   // Membuat Methode
 
-
-  
-
   @override
   Widget build(BuildContext context) {
-    var user = listUsers[0];
     return Scaffold(
-      body: ListView(
-        children: [
-          judul(user["role"],),
-          subjudul(user["jurusan"],user["user_id"],),
-          menulist(context),
-        ],
-    ),
+      body: ListView.builder(
+        itemCount: listUsers.length,
+        itemBuilder: (context, index) {
+          var user = listUsers[index];
+          var namaLengkap = user["nama_depan"] + ' ' + user["nama_belakang"];
+          return Column(
+            children: [
+              Text(namaLengkap),
+              // judul(
+              //   user["role"],
+              // ),
+              subjudul(
+                user["jurusan"],
+                user["mahasiswa_id"],
+              ),
+              // menulist(context),
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -178,7 +202,7 @@ Widget menulist(BuildContext context) {
               tittle: 'Kelola Data \n KKN & KKP ',
               onTap: () {
                 Navigator.pushNamed(context, '/kelola_data_mahasiswa');
-        },
+              },
             ),
             const SizedBox(
               width: 5,

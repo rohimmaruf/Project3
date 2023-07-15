@@ -12,28 +12,22 @@ class DataMahasiswa extends StatefulWidget {
 
 class _DataMahasiswaState extends State<DataMahasiswa> {
   //1. Bikin Variable untuk simpan data
-  List listdata = [];
+  List<Map<String, dynamic>> listdata = [];
   // 12. Bikin variable untuk loading
   bool Loading = true;
   //2. Bikin Methode
-  Future _getdata() async {
-    // 3. Buat untuk memanggil api yang ingin kita gunakan
-    try {
-      final respone = await http
-          .get(Uri.parse('http://192.168.1.4/mahasiswa/users/login.php'));
-      // 4. Juka si respon benar akan muncuk kode 200
-      if (respone.statusCode == 200) {
-        // 5. Kita Buat variable data = Json Decode karean di php encode
-        final data = jsonDecode(respone.body);
-        // 6. Kita buat set State
-        setState(() {
-          listdata = data;
-          // 13. Jika data masuk maka si loading akan berhenti
-          Loading = false;
-        });
-      }
-    } catch (e) {
-      print(e);
+  Future<void> _getdata() async {
+    var url = Uri.parse('http://192.168.1.11/mahasiswa/kegiatan/allKegiatans.php');
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+      setState(() {
+        listdata = List<Map<String, dynamic>>.from(responseData['data']);
+        Loading = false;
+      });
+    } else {
+      print('Failed to fetch data. Status code: ${response.statusCode}');
     }
   }
 
@@ -47,6 +41,7 @@ class _DataMahasiswaState extends State<DataMahasiswa> {
 
   @override
   Widget build(BuildContext context) {
+    print(listdata);
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Page"),
@@ -60,10 +55,11 @@ class _DataMahasiswaState extends State<DataMahasiswa> {
               itemCount: listdata.length,
               itemBuilder: ((context, index) {
                 //10. Untuk Membuat card
+                var data = listdata[index];
                 return Card(
                   child: ListTile(
-                    title: Text(listdata[index][['user_id']]),
-                    subtitle: Text(listdata[index][['nama_depan']]),
+                    title: Text(data['mahasiswa_id']),
+                    subtitle: Text(data['nama_depan']),
                   ),
                 );
               }),

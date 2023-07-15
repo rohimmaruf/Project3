@@ -11,6 +11,7 @@ import 'package:project_3/ui/homePageDosen.dart';
 import 'package:project_3/ui/kaprodi/halaman_utama.dart';
 import 'package:project_3/ui/kaprodi/kelola_data_mahasisw.dart';
 import 'package:project_3/ui/mahasiswa/halamanutama.dart';
+import 'package:project_3/ui/mahasiswa/konsultasi_dosen.dart';
 import 'package:project_3/ui/signInPage.dart';
 import 'package:project_3/ui/succesPage.dart';
 import 'package:project_3/ui/pilihKknKkpPage.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         '/halamanutama1': (context) => const HalamanUtama(),
         '/halaman_utama_kprodi': (context) => const HalamanUtamaKprodi(),
         '/kelola_data_mahasiswa': (context) => const KelolaDataMahasiswa(),
-        
+        '/konsultasi-dosen' : (context) => const KonsultasiDosen(),
         
       },
     );

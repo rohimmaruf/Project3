@@ -5,6 +5,7 @@ import 'package:project_3/shared/theme.dart';
 import 'package:project_3/widget/form.dart';
 import 'package:project_3/widget/button.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_3/shared/local_storage.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -15,42 +16,46 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final formkey = GlobalKey<FormState>();
-  final id_controller = TextEditingController(text: '2023000044');
+  final id_controller = TextEditingController(text: '2023000035');
   final password_controller = TextEditingController(text: 'mahasiswa');
+
   _simpan() async {
-    print(id_controller);
     final respone = await http.post(
-      Uri.parse('http://192.168.1.11/mahasiswa/users/login.php'),
-      body: 
-      jsonEncode({
-        "user_id": id_controller.text,
-        "password": password_controller.text,
-      })
-    );
+        Uri.parse('http://192.168.1.11/mahasiswa/users/login.php'),
+        body: jsonEncode({
+          "user_id": id_controller.text,
+          "password": password_controller.text,
+        }));
     var body = jsonDecode(respone.body);
     // Negecek sudah bnar atau belum untuk ambil object
-    print(body["success"]);
     // print(body["data"]["role"]);
-    // Untuk kondisi jika dia benar apa jika salah 
-    if (body["success"]){
+    // Untuk kondisi jika dia benar apa jika salah
+    if (body["success"]) {
+      print(body["data"]);
+      await LocalStorage.saveResponseObject(body["data"]);
+      var result = body["data"];
       // print("kerja bagus");
       final snackBar = SnackBar(
-                        content: Text(body["message"]),
-                      );
-                      // 16. Kita tampilkan si snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.pushNamed(context, '/halaman_utama_kprodi');
-    }else {
-      // print("salah");
+        content: Text(body["message"]),
+      );
+      // 16. Kita tampilkan si snackbar
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      if (result["role"] == "kaprodi") {
+        Navigator.pushNamed(context, '/halaman_utama_kprodi');
+      } else if (result["role"] == "mahasiswa") {
+        Navigator.pushNamed(context, '/halamanutama1');
+      } else {
+        Navigator.pushNamed(context, '/home-page-dosen');
+      }
+    } else {
       final snackBar = SnackBar(
-                        content: const Text('Masukan kembali Nomor induk & Sandi yang Benar'),
-                      );
-                      // 16. Kita tampilkan si snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        content: const Text('Masukan kembali Nomor induk & Sandi yang Benar'),
+      );
+      // 16. Kita tampilkan si snackbar
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    
-    // return (respone);
 
+    // return (respone);
   }
 
   @override
